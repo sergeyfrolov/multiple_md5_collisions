@@ -1,0 +1,14 @@
+$ md5sum *
+3f9e5e44fe5f4bf1fb7dd2b4461fa891  file_1.py
+3f9e5e44fe5f4bf1fb7dd2b4461fa891  file_2.py
+3f9e5e44fe5f4bf1fb7dd2b4461fa891  file_3.py
+3f9e5e44fe5f4bf1fb7dd2b4461fa891  file_4.py
+$ ./file_1.py 
+Bank account balance: 1$
+$ ./file_2.py 
+Bank account balance: 2$
+$ ./file_3.py 
+Bank account balance: 3$
+$ ./file_4.py 
+Bank account balance: 4$
+
