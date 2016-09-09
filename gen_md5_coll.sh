@@ -110,9 +110,10 @@ function gen_collisions() {
 		$FASTCOLL -p "${COLLISIONS_FOLDER}/$CUR_POWER_BIN" -o "${COLLISIONS_FOLDER}/tmp.full.0" "${COLLISIONS_FOLDER}/tmp.full.1"
 		tail -c 128 "${COLLISIONS_FOLDER}/tmp.full.0" > "${COLLISIONS_FOLDER}/tmp.0"
 		tail -c 128 "${COLLISIONS_FOLDER}/tmp.full.1" > "${COLLISIONS_FOLDER}/tmp.1"
-		for CUR_FILE in `seq $PREV_POWER $CUR_POWER`; do
-			CUR_FILE_BIN=$(echo "obase=2;$CUR_FILE" | bc)
-			echo "CUR_FILE_BIN $CUR_FILE_BIN"
+ 		for CUR_FILE in `seq 0 $CUR_POWER`; do
+ 			UNPAD_FILE_BIN=$(echo "obase=2;$CUR_FILE" | bc)
+ 			CUR_FILE_BIN=`printf "%0${i}d" "$UNPAD_FILE_BIN"`
+			echo "Generating intermidiate collision $CUR_FILE_BIN"
 			cp "${COLLISIONS_FOLDER}/$CUR_FILE_BIN" "${COLLISIONS_FOLDER}/${CUR_FILE_BIN}0"
 			cat "${COLLISIONS_FOLDER}/tmp.0" >> "${COLLISIONS_FOLDER}/${CUR_FILE_BIN}0"
 			cp "${COLLISIONS_FOLDER}/$CUR_FILE_BIN" "${COLLISIONS_FOLDER}/${CUR_FILE_BIN}1"
@@ -129,7 +130,6 @@ function gen_collisions() {
 	ID=1
 	PREFIX_SIZE=$(wc -c <"${COLLISIONS_FOLDER}/prefix")
 	for i in `seq 0 $LAST_COL_FILE`; do
-		echo "i $i"
 		UNPAD_CUR_BIN_I=$(echo "obase=2;$i" | bc)
 		CUR_BIN_I=`printf "%0${N}d" "$UNPAD_CUR_BIN_I"`
 		cp "${COLLISIONS_FOLDER}/$CUR_BIN_I" "${WORK_FOLDER}/$(get_filename_by_id $ID)"
